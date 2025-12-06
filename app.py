@@ -20,9 +20,58 @@ VisualTheme.inject_custom_css()
 VisualTheme.apply_matplotlib_theme()
 
 # ---------------------------------------------------------
-# HEADER
+# EPIC GAMING HEADER
 # ---------------------------------------------------------
-st.title("🎮 Video Games — Dashboard de Datos (CORGIS)")
+st.markdown("""
+<div style='text-align: center; padding: 2rem 0; margin-bottom: 2rem; position: relative;'>
+    <div style='
+        font-family: "Orbitron", sans-serif;
+        font-size: 4.5rem;
+        font-weight: 900;
+        background: linear-gradient(45deg, #00ffff, #ff00ff, #00ff88, #ffff00, #00ffff);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientFlow 4s ease infinite;
+        letter-spacing: 5px;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    '>
+        🎮 GAME DATA NEXUS 🎮
+    </div>
+    <div style='
+        font-family: "Rajdhani", sans-serif;
+        font-size: 1.5rem;
+        color: #00ffff;
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        margin-top: 0.5rem;
+    '>
+        ⚡ ANÁLISIS ÉPICO DE LA INDUSTRIA GAMING ⚡
+    </div>
+    <div style='
+        font-family: "Rajdhani", sans-serif;
+        font-size: 1rem;
+        color: #ff00ff;
+        font-weight: 500;
+        letter-spacing: 2px;
+        margin-top: 1rem;
+        opacity: 0.8;
+    '>
+        [ POWERED BY CORGIS DATASET ]
+    </div>
+</div>
+
+<style>
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+</style>
+""", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
 # AUTOMATIC DATA LOADING
@@ -60,14 +109,49 @@ tab_intro, tab_mercado, tab_calidad, tab_temporal, tab_experiencia, tab_corr = s
 # TAB 1 – Intro
 # ---------------------------------------------------------
 with tab_intro:
-    # Welcome header with emoji and engaging title
+    # Epic gaming welcome header
     st.markdown("""
-    <h1 style='text-align: center; color: #8B5CF6; font-size: 3rem; margin-bottom: 1rem;'>
-        🎮 Bienvenido al Mundo de los Videojuegos
-    </h1>
-    <p style='text-align: center; font-size: 1.2rem; color: #94A3B8; margin-bottom: 2rem;'>
-        Descubre las historias ocultas detrás de miles de juegos a través de datos y visualizaciones
-    </p>
+    <div style='text-align: center; padding: 2rem; margin-bottom: 2rem; 
+                background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+                border-radius: 20px;
+                border: 2px solid rgba(0, 255, 255, 0.3);
+                box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);'>
+        <div style='
+            font-family: "Orbitron", sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #00ffff 0%, #ff00ff 50%, #00ff88 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        '>
+            🎮 LEVEL 1: INICIO 🎮
+        </div>
+        <div style='
+            font-family: "Rajdhani", sans-serif;
+            font-size: 1.4rem;
+            color: #00ffff;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+            line-height: 1.6;
+        '>
+            ⚡ DESCUBRE LOS SECRETOS DE LA INDUSTRIA GAMING ⚡<br>
+            <span style='font-size: 1.1rem; color: #ff00ff;'>
+                [ Miles de juegos • Datos épicos • Visualizaciones interactivas ]
+            </span>
+        </div>
+    </div>
+    
+    <style>
+    @keyframes textGlow {
+        from { filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5)); }
+        to { filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.8)); }
+    }
+    </style>
     """, unsafe_allow_html=True)
     
     # Calculate key statistics
@@ -118,32 +202,110 @@ with tab_intro:
     
     st.markdown("</div>", unsafe_allow_html=True)
     
-    # Narrative introduction
+    # Epic narrative introduction
     st.markdown("""
-    <div style='background: #1E293B; border-radius: 12px; padding: 2rem; margin: 2rem 0; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);'>
-        <h3 style='color: #8B5CF6; margin-top: 0;'>Una Historia de Datos</h3>
-        <p style='color: #F1F5F9; font-size: 1.1rem; line-height: 1.8;'>
-            Este dashboard te lleva en un viaje a través de la industria de los videojuegos. 
-            Desde los clásicos que definieron generaciones hasta los títulos modernos que rompen récords, 
-            cada dato cuenta una historia. Exploraremos patrones de ventas, la relación entre calidad y 
-            popularidad, tendencias temporales, y las conexiones ocultas que revelan los secretos del éxito 
-            en esta industria multimillonaria.
+    <div style='
+        background: rgba(30, 41, 59, 0.8);
+        border-radius: 15px;
+        padding: 2.5rem;
+        margin: 2rem 0;
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        border: 2px solid rgba(0, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+    '>
+        <div style='
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        '></div>
+        
+        <h3 style='
+            font-family: "Orbitron", sans-serif;
+            color: #00ffff;
+            margin-top: 0;
+            font-size: 2rem;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        '>
+            📖 MISIÓN: EXPLORAR LA INDUSTRIA GAMING
+        </h3>
+        <p style='
+            font-family: "Rajdhani", sans-serif;
+            color: #F1F5F9;
+            font-size: 1.2rem;
+            line-height: 1.9;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        '>
+            🎯 <strong style="color: #ff00ff;">Tu misión:</strong> Descubrir los patrones ocultos detrás de la industria más épica del entretenimiento.<br><br>
+            
+            🕹️ <strong style="color: #00ff88;">Desde los clásicos legendarios</strong> que definieron generaciones enteras, 
+            hasta los <strong style="color: #ffff00;">títulos modernos que rompen todos los récords</strong>, 
+            cada dato cuenta una historia única.<br><br>
+            
+            ⚔️ <strong style="color: #ff00ff;">Explorarás:</strong> Patrones de ventas épicos • Relación calidad vs popularidad • 
+            Evolución temporal de consolas • Conexiones ocultas que revelan los secretos del éxito en esta 
+            <strong style="color: #00ffff;">industria multimillonaria</strong>.
         </p>
-        <p style='color: #94A3B8; font-size: 1rem; margin-top: 1rem;'>
-            <strong>Navega por las pestañas</strong> para descubrir diferentes aspectos de esta fascinante historia de datos.
-        </p>
+        <div style='
+            font-family: "Rajdhani", sans-serif;
+            color: #00ffff;
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(0, 255, 255, 0.1);
+            border-left: 4px solid #00ffff;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        '>
+            ⚡ NAVEGA POR LAS PESTAÑAS ⚡ para desbloquear diferentes niveles de análisis
+        </div>
+    </div>
+    
+    <style>
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Epic data preview section
+    st.markdown("""
+    <div style='margin-top: 2rem; text-align: center;'>
+        <h3 style='
+            font-family: "Orbitron", sans-serif;
+            color: #ff00ff;
+            font-size: 2rem;
+            text-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+            letter-spacing: 2px;
+        '>
+            💾 DATOS DEL SISTEMA 💾
+        </h3>
     </div>
     """, unsafe_allow_html=True)
     
-    # Sample data preview in styled container
     st.markdown("""
-    <div style='margin-top: 2rem;'>
-        <h3 style='color: #F1F5F9;'>Vista Previa de los Datos</h3>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div style='background: #1E293B; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);'>
+    <div style='
+        background: rgba(30, 41, 59, 0.8);
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 0 25px rgba(255, 0, 255, 0.3);
+        border: 2px solid rgba(255, 0, 255, 0.3);
+        backdrop-filter: blur(10px);
+    '>
     """, unsafe_allow_html=True)
     
     st.dataframe(
@@ -221,13 +383,25 @@ with tab_mercado:
         fig_genre.update_layout(
             title=dict(
                 text='Ventas Totales por Género (en millones)',
-                font=dict(size=20, color=VisualTheme.TEXT_PRIMARY)
+                font=dict(size=20, color=VisualTheme.TEXT_PRIMARY, family='Orbitron')
             ),
-            xaxis_title='Ventas Totales (millones)',
-            yaxis_title='Género',
+            xaxis=dict(
+                title=dict(
+                    text='Ventas Totales (millones)',
+                    font=dict(family='Rajdhani')
+                ),
+                tickfont=dict(family='Rajdhani')
+            ),
+            yaxis=dict(
+                title=dict(
+                    text='Género',
+                    font=dict(family='Rajdhani')
+                ),
+                autorange='reversed',  # Top genre at top
+                tickfont=dict(family='Rajdhani')
+            ),
             height=max(400, len(sales_by_genre) * 30),
-            showlegend=False,
-            yaxis=dict(autorange='reversed')  # Top genre at top
+            showlegend=False
         )
         
         # Apply theme
@@ -280,9 +454,12 @@ with tab_mercado:
                 colors=[VisualTheme.get_color_for_category(genre, games_by_genre.index.tolist()) 
                         for genre in games_by_genre.index]
             ),
-            textinfo='label+percent',
-            textposition='outside',
-            hovertemplate='<b>%{label}</b><br>Juegos: %{value}<br>Porcentaje: %{percent}<extra></extra>'
+            textinfo='percent',  # Solo mostrar porcentaje en el gráfico
+            textposition='inside',  # Dentro del gráfico para evitar overlapping
+            textfont=dict(size=14, color='white'),
+            insidetextorientation='radial',
+            hovertemplate='<b>%{label}</b><br>Juegos: %{value}<br>Porcentaje: %{percent}<extra></extra>',
+            pull=[0.05 if i < 3 else 0 for i in range(len(games_by_genre))]  # Separar los top 3
         )])
         
         fig_pie.update_layout(
@@ -290,15 +467,20 @@ with tab_mercado:
                 text='Proporción de Juegos por Género',
                 font=dict(size=20, color=VisualTheme.TEXT_PRIMARY)
             ),
-            height=600,
+            height=700,
             showlegend=True,
             legend=dict(
                 orientation='v',
-                yanchor='middle',
-                y=0.5,
+                yanchor='top',
+                y=1,
                 xanchor='left',
-                x=1.02
-            )
+                x=1.05,
+                font=dict(size=12),
+                bgcolor='rgba(30, 41, 59, 0.8)',
+                bordercolor=VisualTheme.LINE_COLOR,
+                borderwidth=1
+            ),
+            margin=dict(l=20, r=200, t=80, b=20)  # Más espacio a la derecha para la leyenda
         )
         
         fig_pie = VisualTheme.apply_plotly_theme(fig_pie)
@@ -1326,7 +1508,7 @@ with tab_temporal:
                     console_colors = {console: VisualTheme.get_color_for_category(console, all_consoles) 
                                      for console in all_consoles}
                     
-                    # Crear frames manualmente para race bars horizontales
+                    # Crear frames manualmente para race bars horizontales con transiciones fluidas
                     years = sorted(df_race['Year'].unique())
                     frames = []
                     
@@ -1336,15 +1518,36 @@ with tab_temporal:
                     # Calcular el máximo de ventas para fijar el eje X
                     max_sales = df_race['Sales'].max()
                     
+                    # Obtener todas las consolas que aparecen en el top N en algún momento
+                    top_consoles_ever = set()
                     for year in years:
-                        # Obtener datos del año y ordenar por ventas (descendente)
+                        year_data = df_race[df_race['Year'] == year].nlargest(top_n, 'Sales')
+                        top_consoles_ever.update(year_data['Console'].tolist())
+                    
+                    # Convertir a lista ordenada para mantener consistencia
+                    top_consoles_list = sorted(list(top_consoles_ever))
+                    
+                    for year in years:
+                        # Obtener datos del año para TODAS las consolas que alguna vez estuvieron en top 5
                         year_data = df_race[df_race['Year'] == year].copy()
-                        year_data = year_data.sort_values('Sales', ascending=True)  # Ascendente para que el top esté arriba
                         
-                        # Tomar solo las top N consolas
-                        year_data = year_data.tail(top_n)
+                        # Filtrar solo las consolas que están en top_consoles_ever
+                        year_data = year_data[year_data['Console'].isin(top_consoles_ever)]
                         
-                        # Crear frame
+                        # Si una consola no tiene datos este año, agregar con ventas 0
+                        for console in top_consoles_list:
+                            if console not in year_data['Console'].values:
+                                new_row = pd.DataFrame({
+                                    'Year': [year],
+                                    'Console': [console],
+                                    'Sales': [0]
+                                })
+                                year_data = pd.concat([year_data, new_row], ignore_index=True)
+                        
+                        # Ordenar por ventas (ascendente para que el top esté arriba)
+                        year_data = year_data.sort_values('Sales', ascending=True)
+                        
+                        # Crear frame con transiciones suaves
                         frame = go.Frame(
                             data=[go.Bar(
                                 y=year_data['Console'],
@@ -1354,7 +1557,7 @@ with tab_temporal:
                                     color=[console_colors[console] for console in year_data['Console']],
                                     line=dict(color='rgba(255, 255, 255, 0.3)', width=1.5)
                                 ),
-                                text=[f'{val:.1f}M' for val in year_data['Sales']],
+                                text=[f'{val:.1f}M' if val > 0 else '' for val in year_data['Sales']],
                                 textposition='outside',
                                 textfont=dict(size=12, color=VisualTheme.TEXT_PRIMARY),
                                 hovertemplate='<b>%{y}</b><br>Ventas: %{x:.2f}M<extra></extra>'
@@ -1370,9 +1573,21 @@ with tab_temporal:
                         )
                         frames.append(frame)
                     
-                    # Crear figura inicial con el primer año
+                    # Crear figura inicial con el primer año (todas las consolas del top ever)
                     initial_data = df_race[df_race['Year'] == years[0]].copy()
-                    initial_data = initial_data.sort_values('Sales', ascending=True).tail(top_n)
+                    initial_data = initial_data[initial_data['Console'].isin(top_consoles_ever)]
+                    
+                    # Agregar consolas faltantes con ventas 0
+                    for console in top_consoles_list:
+                        if console not in initial_data['Console'].values:
+                            new_row = pd.DataFrame({
+                                'Year': [years[0]],
+                                'Console': [console],
+                                'Sales': [0]
+                            })
+                            initial_data = pd.concat([initial_data, new_row], ignore_index=True)
+                    
+                    initial_data = initial_data.sort_values('Sales', ascending=True)
                     
                     fig_race = go.Figure(
                         data=[go.Bar(
@@ -1416,11 +1631,12 @@ with tab_temporal:
                         showlegend=False,
                         plot_bgcolor=VisualTheme.CARD_BACKGROUND,
                         paper_bgcolor=VisualTheme.CARD_BACKGROUND,
+                        # Transiciones globales más fluidas
                         transition={
                             'duration': 800,
                             'easing': 'cubic-in-out'
                         },
-                        # Botones abajo (como la gráfica de géneros)
+                        # Botones de control (estilo simple como ventas por género)
                         updatemenus=[{
                             'type': 'buttons',
                             'showactive': False,
@@ -1448,6 +1664,7 @@ with tab_temporal:
                                 }
                             ]
                         }],
+                        # Slider
                         sliders=[{
                             'active': 0,
                             'steps': [
