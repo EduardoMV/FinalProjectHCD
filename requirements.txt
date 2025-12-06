@@ -1,0 +1,21 @@
+# Dashboard de Análisis de Videojuegos
+# Dependencias del proyecto
+
+# Framework principal
+streamlit>=1.28.0
+
+# Análisis de datos
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Visualización
+plotly>=5.17.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Análisis estadístico
+scipy>=1.11.0
+
+# Testing (opcional)
+pytest>=7.4.0
+hypothesis>=6.82.0
