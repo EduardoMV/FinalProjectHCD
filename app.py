@@ -1437,118 +1437,52 @@ with tab_temporal:
                     console_colors = {console: VisualTheme.get_color_for_category(console, all_consoles) 
                                      for console in all_consoles}
                     
-                    # Crear frames manualmente para race bars horizontales con transiciones fluidas
-                    years = sorted(df_race['Year'].unique())
-                    frames = []
-                    
                     # Configurar número de consolas a mostrar (top 5)
                     top_n = 5
                     
-                    # Calcular el máximo de ventas para fijar el eje X
-                    max_sales = df_race['Sales'].max()
-                    
                     # Obtener todas las consolas que aparecen en el top N en algún momento
+                    years = sorted(df_race['Year'].unique())
                     top_consoles_ever = set()
                     for year in years:
                         year_data = df_race[df_race['Year'] == year].nlargest(top_n, 'Sales')
                         top_consoles_ever.update(year_data['Console'].tolist())
                     
-                    # Convertir a lista ordenada para mantener consistencia
-                    top_consoles_list = sorted(list(top_consoles_ever))
-                    
+                    # Crear DataFrame con TODAS las consolas para TODOS los años
+                    # Esto es clave para las transiciones fluidas
+                    race_data = []
                     for year in years:
-                        # Obtener datos del año para TODAS las consolas que alguna vez estuvieron en top 5
-                        year_data = df_race[df_race['Year'] == year].copy()
-                        
-                        # Filtrar solo las consolas que están en top_consoles_ever
-                        year_data = year_data[year_data['Console'].isin(top_consoles_ever)]
-                        
-                        # Si una consola no tiene datos este año, agregar con ventas 0
-                        for console in top_consoles_list:
-                            if console not in year_data['Console'].values:
-                                new_row = pd.DataFrame({
-                                    'Year': [year],
-                                    'Console': [console],
-                                    'Sales': [0]
-                                })
-                                year_data = pd.concat([year_data, new_row], ignore_index=True)
-                        
-                        # IMPORTANTE: Mantener el mismo orden de consolas en todos los frames
-                        # Crear un diccionario con todas las consolas y sus ventas
-                        sales_dict = dict(zip(year_data['Console'], year_data['Sales']))
-                        
-                        # Ordenar consolas por ventas para este año específico
-                        sorted_consoles = sorted(top_consoles_list, key=lambda x: sales_dict.get(x, 0))
-                        sorted_sales = [sales_dict.get(console, 0) for console in sorted_consoles]
-                        
-                        # Crear frame con transiciones suaves
-                        frame = go.Frame(
-                            data=[go.Bar(
-                                y=sorted_consoles,
-                                x=sorted_sales,
-                                orientation='h',
-                                marker=dict(
-                                    color=[console_colors[console] for console in sorted_consoles],
-                                    line=dict(color='rgba(255, 255, 255, 0.3)', width=1.5)
-                                ),
-                                text=[f'{val:.1f}M' if val > 0 else '' for val in sorted_sales],
-                                textposition='outside',
-                                textfont=dict(size=12, color=VisualTheme.TEXT_PRIMARY),
-                                hovertemplate='<b>%{y}</b><br>Ventas: %{x:.2f}M<extra></extra>'
-                            )],
-                            name=str(year),
-                            layout=go.Layout(
-                                xaxis=dict(range=[0, max_sales * 1.15]),  # Rango fijo en cada frame
-                                title=dict(
-                                    text=f'🎮 Guerra de Consolas - Año {year}',
-                                    font=dict(size=24, color=VisualTheme.TEXT_PRIMARY)
-                                )
-                            )
-                        )
-                        frames.append(frame)
-                    
-                    # Crear figura inicial con el primer año (todas las consolas del top ever)
-                    initial_data = df_race[df_race['Year'] == years[0]].copy()
-                    initial_data = initial_data[initial_data['Console'].isin(top_consoles_ever)]
-                    
-                    # Agregar consolas faltantes con ventas 0
-                    for console in top_consoles_list:
-                        if console not in initial_data['Console'].values:
-                            new_row = pd.DataFrame({
-                                'Year': [years[0]],
-                                'Console': [console],
-                                'Sales': [0]
+                        for console in top_consoles_ever:
+                            # Buscar ventas de esta consola en este año
+                            sales_value = df_race[(df_race['Year'] == year) & (df_race['Console'] == console)]['Sales'].values
+                            sales = sales_value[0] if len(sales_value) > 0 else 0
+                            
+                            race_data.append({
+                                'Year': year,
+                                'Console': console,
+                                'Sales': sales
                             })
-                            initial_data = pd.concat([initial_data, new_row], ignore_index=True)
                     
-                    # Crear diccionario de ventas iniciales
-                    initial_sales_dict = dict(zip(initial_data['Console'], initial_data['Sales']))
+                    df_race_full = pd.DataFrame(race_data)
                     
-                    # Ordenar consolas por ventas iniciales
-                    initial_sorted_consoles = sorted(top_consoles_list, key=lambda x: initial_sales_dict.get(x, 0))
-                    initial_sorted_sales = [initial_sales_dict.get(console, 0) for console in initial_sorted_consoles]
-                    
-                    fig_race = go.Figure(
-                        data=[go.Bar(
-                            y=initial_sorted_consoles,
-                            x=initial_sorted_sales,
-                            orientation='h',
-                            marker=dict(
-                                color=[console_colors[console] for console in initial_sorted_consoles],
-                                line=dict(color='rgba(255, 255, 255, 0.3)', width=1.5)
-                            ),
-                            text=[f'{val:.1f}M' if val > 0 else '' for val in initial_sorted_sales],
-                            textposition='outside',
-                            textfont=dict(size=12, color=VisualTheme.TEXT_PRIMARY),
-                            hovertemplate='<b>%{y}</b><br>Ventas: %{x:.2f}M<extra></extra>'
-                        )],
-                        frames=frames
+                    # Crear race bar usando px.bar con animation_frame y animation_group
+                    # Esto es lo que hace que las transiciones sean fluidas
+                    fig_race = px.bar(
+                        df_race_full,
+                        x="Sales",
+                        y="Console",
+                        orientation="h",
+                        color="Console",
+                        animation_frame="Year",
+                        animation_group="Console",  # CLAVE: esto hace que Plotly sepa qué barras son las mismas
+                        range_x=[0, df_race_full["Sales"].max() * 1.15],
+                        color_discrete_map=console_colors,
+                        title="🎮 Guerra de Consolas 🎮"
                     )
                     
-                    # Configurar layout con animación fluida y ejes fijos
+                    # Configurar layout
                     fig_race.update_layout(
                         title=dict(
-                            text=f'🎮 Guerra de Consolas - Año {years[0]}',
+                            text='🎮 Guerra de Consolas',
                             font=dict(size=24, color=VisualTheme.TEXT_PRIMARY)
                         ),
                         xaxis=dict(
@@ -1556,7 +1490,6 @@ with tab_temporal:
                                 text='Ventas Acumuladas (millones)',
                                 font=dict(size=14, color=VisualTheme.TEXT_PRIMARY)
                             ),
-                            range=[0, max_sales * 1.15],  # Rango fijo
                             tickfont=dict(size=12, color=VisualTheme.TEXT_SECONDARY)
                         ),
                         yaxis=dict(
@@ -1564,67 +1497,19 @@ with tab_temporal:
                                 text='',
                                 font=dict(size=14, color=VisualTheme.TEXT_PRIMARY)
                             ),
-                            tickfont=dict(size=12, color=VisualTheme.TEXT_PRIMARY)
+                            tickfont=dict(size=12, color=VisualTheme.TEXT_PRIMARY),
+                            categoryorder='total ascending'  # Ordenar por ventas
                         ),
                         height=600,
                         showlegend=False,
                         plot_bgcolor=VisualTheme.CARD_BACKGROUND,
-                        paper_bgcolor=VisualTheme.CARD_BACKGROUND,
-                        # Transiciones globales más fluidas
-                        transition={
-                            'duration': 800,
-                            'easing': 'cubic-in-out'
-                        },
-                        # Botones de control (estilo simple como ventas por género)
-                        updatemenus=[{
-                            'type': 'buttons',
-                            'showactive': False,
-                            'y': 0,
-                            'yanchor': 'top',
-                            'xanchor': 'left',
-                            'buttons': [
-                                {
-                                    'label': '▶',
-                                    'method': 'animate',
-                                    'args': [None, {
-                                        'frame': {'duration': 1200, 'redraw': True},
-                                        'fromcurrent': True,
-                                        'transition': {'duration': 800, 'easing': 'cubic-in-out'}
-                                    }]
-                                },
-                                {
-                                    'label': '⏸',
-                                    'method': 'animate',
-                                    'args': [[None], {
-                                        'frame': {'duration': 0, 'redraw': False},
-                                        'mode': 'immediate',
-                                        'transition': {'duration': 0}
-                                    }]
-                                }
-                            ]
-                        }],
-                        # Slider
-                        sliders=[{
-                            'active': 0,
-                            'steps': [
-                                {
-                                    'args': [[f.name], {
-                                        'frame': {'duration': 800, 'redraw': True},
-                                        'mode': 'immediate',
-                                        'transition': {'duration': 800, 'easing': 'cubic-in-out'}
-                                    }],
-                                    'label': str(year),
-                                    'method': 'animate'
-                                }
-                                for year, f in zip(years, frames)
-                            ],
-                            'currentvalue': {
-                                'prefix': 'Año: ',
-                                'visible': True,
-                                'xanchor': 'right'
-                            }
-                        }]
+                        paper_bgcolor=VisualTheme.CARD_BACKGROUND
                     )
+                    
+                    # Configurar animación fluida
+                    fig_race.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 1200
+                    fig_race.layout.updatemenus[0].buttons[0].args[1]["transition"]["duration"] = 800
+                    fig_race.layout.updatemenus[0].buttons[0].args[1]["transition"]["easing"] = "cubic-in-out"
                     
                     # Aplicar tema
                     fig_race = VisualTheme.apply_plotly_theme(fig_race)
