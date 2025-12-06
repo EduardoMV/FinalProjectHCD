@@ -203,84 +203,13 @@ with tab_intro:
     st.markdown("</div>", unsafe_allow_html=True)
     
     # Epic narrative introduction
-    st.markdown("""
-    <div style='
-        background: rgba(30, 41, 59, 0.8);
-        border-radius: 15px;
-        padding: 2.5rem;
-        margin: 2rem 0;
-        box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-        border: 2px solid rgba(0, 255, 255, 0.3);
-        backdrop-filter: blur(10px);
-        position: relative;
-        overflow: hidden;
-    '>
-        <div style='
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        '></div>
-        
-        <h3 style='
-            font-family: "Orbitron", sans-serif;
-            color: #00ffff;
-            margin-top: 0;
-            font-size: 2rem;
-            text-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
-            letter-spacing: 2px;
-            position: relative;
-            z-index: 1;
-        '>
-            📖 MISIÓN: EXPLORAR LA INDUSTRIA GAMING
-        </h3>
-        <p style='
-            font-family: "Rajdhani", sans-serif;
-            color: #F1F5F9;
-            font-size: 1.2rem;
-            line-height: 1.9;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-        '>
-            🎯 <strong style="color: #ff00ff;">Tu misión:</strong> Descubrir los patrones ocultos detrás de la industria más épica del entretenimiento.<br><br>
-            
-            🕹️ <strong style="color: #00ff88;">Desde los clásicos legendarios</strong> que definieron generaciones enteras, 
-            hasta los <strong style="color: #ffff00;">títulos modernos que rompen todos los récords</strong>, 
-            cada dato cuenta una historia única.<br><br>
-            
-            ⚔️ <strong style="color: #ff00ff;">Explorarás:</strong> Patrones de ventas épicos • Relación calidad vs popularidad • 
-            Evolución temporal de consolas • Conexiones ocultas que revelan los secretos del éxito en esta 
-            <strong style="color: #00ffff;">industria multimillonaria</strong>.
-        </p>
-        <div style='
-            font-family: "Rajdhani", sans-serif;
-            color: #00ffff;
-            font-size: 1.1rem;
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: rgba(0, 255, 255, 0.1);
-            border-left: 4px solid #00ffff;
-            border-radius: 8px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 1;
-        '>
-            ⚡ NAVEGA POR LAS PESTAÑAS ⚡ para desbloquear diferentes niveles de análisis
-        </div>
+    st.markdown("""<div style='background: rgba(30, 41, 59, 0.8); border-radius: 15px; padding: 2.5rem; margin: 2rem 0; box-shadow: 0 0 30px rgba(0, 255, 255, 0.3); border: 2px solid rgba(0, 255, 255, 0.3); backdrop-filter: blur(10px); position: relative; overflow: hidden;'>
+        <div style='position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%); animation: rotate 20s linear infinite;'></div>
+        <h3 style='font-family: "Orbitron", sans-serif; color: #00ffff; margin-top: 0; font-size: 2rem; text-shadow: 0 0 15px rgba(0, 255, 255, 0.8); letter-spacing: 2px; position: relative; z-index: 1;'>📖 MISIÓN: EXPLORAR LA INDUSTRIA GAMING</h3>
+        <p style='font-family: "Rajdhani", sans-serif; color: #F1F5F9; font-size: 1.2rem; line-height: 1.9; font-weight: 500; position: relative; z-index: 1;'>🎯 <strong style="color: #ff00ff;">Tu misión:</strong> Descubrir los patrones ocultos detrás de la industria más épica del entretenimiento.<br><br>🕹️ <strong style="color: #00ff88;">Desde los clásicos legendarios</strong> que definieron generaciones enteras, hasta los <strong style="color: #ffff00;">títulos modernos que rompen todos los récords</strong>, cada dato cuenta una historia única.<br><br>⚔️ <strong style="color: #ff00ff;">Explorarás:</strong> Patrones de ventas épicos • Relación calidad vs popularidad • Evolución temporal de consolas • Conexiones ocultas que revelan los secretos del éxito en esta <strong style="color: #00ffff;">industria multimillonaria</strong>.</p>
+        <div style='font-family: "Rajdhani", sans-serif; color: #00ffff; font-size: 1.1rem; margin-top: 1.5rem; padding: 1rem; background: rgba(0, 255, 255, 0.1); border-left: 4px solid #00ffff; border-radius: 8px; font-weight: 600; letter-spacing: 1px; position: relative; z-index: 1;'>⚡ NAVEGA POR LAS PESTAÑAS ⚡ para desbloquear diferentes niveles de análisis</div>
     </div>
-    
-    <style>
-    @keyframes rotate {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-    </style>
-    """, unsafe_allow_html=True)
+    <style>@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }</style>""", unsafe_allow_html=True)
     
     # Epic data preview section
     st.markdown("""
@@ -1544,20 +1473,25 @@ with tab_temporal:
                                 })
                                 year_data = pd.concat([year_data, new_row], ignore_index=True)
                         
-                        # Ordenar por ventas (ascendente para que el top esté arriba)
-                        year_data = year_data.sort_values('Sales', ascending=True)
+                        # IMPORTANTE: Mantener el mismo orden de consolas en todos los frames
+                        # Crear un diccionario con todas las consolas y sus ventas
+                        sales_dict = dict(zip(year_data['Console'], year_data['Sales']))
+                        
+                        # Ordenar consolas por ventas para este año específico
+                        sorted_consoles = sorted(top_consoles_list, key=lambda x: sales_dict.get(x, 0))
+                        sorted_sales = [sales_dict.get(console, 0) for console in sorted_consoles]
                         
                         # Crear frame con transiciones suaves
                         frame = go.Frame(
                             data=[go.Bar(
-                                y=year_data['Console'],
-                                x=year_data['Sales'],
+                                y=sorted_consoles,
+                                x=sorted_sales,
                                 orientation='h',
                                 marker=dict(
-                                    color=[console_colors[console] for console in year_data['Console']],
+                                    color=[console_colors[console] for console in sorted_consoles],
                                     line=dict(color='rgba(255, 255, 255, 0.3)', width=1.5)
                                 ),
-                                text=[f'{val:.1f}M' if val > 0 else '' for val in year_data['Sales']],
+                                text=[f'{val:.1f}M' if val > 0 else '' for val in sorted_sales],
                                 textposition='outside',
                                 textfont=dict(size=12, color=VisualTheme.TEXT_PRIMARY),
                                 hovertemplate='<b>%{y}</b><br>Ventas: %{x:.2f}M<extra></extra>'
@@ -1587,18 +1521,23 @@ with tab_temporal:
                             })
                             initial_data = pd.concat([initial_data, new_row], ignore_index=True)
                     
-                    initial_data = initial_data.sort_values('Sales', ascending=True)
+                    # Crear diccionario de ventas iniciales
+                    initial_sales_dict = dict(zip(initial_data['Console'], initial_data['Sales']))
+                    
+                    # Ordenar consolas por ventas iniciales
+                    initial_sorted_consoles = sorted(top_consoles_list, key=lambda x: initial_sales_dict.get(x, 0))
+                    initial_sorted_sales = [initial_sales_dict.get(console, 0) for console in initial_sorted_consoles]
                     
                     fig_race = go.Figure(
                         data=[go.Bar(
-                            y=initial_data['Console'],
-                            x=initial_data['Sales'],
+                            y=initial_sorted_consoles,
+                            x=initial_sorted_sales,
                             orientation='h',
                             marker=dict(
-                                color=[console_colors[console] for console in initial_data['Console']],
+                                color=[console_colors[console] for console in initial_sorted_consoles],
                                 line=dict(color='rgba(255, 255, 255, 0.3)', width=1.5)
                             ),
-                            text=[f'{val:.1f}M' for val in initial_data['Sales']],
+                            text=[f'{val:.1f}M' if val > 0 else '' for val in initial_sorted_sales],
                             textposition='outside',
                             textfont=dict(size=12, color=VisualTheme.TEXT_PRIMARY),
                             hovertemplate='<b>%{y}</b><br>Ventas: %{x:.2f}M<extra></extra>'
@@ -1736,8 +1675,6 @@ with tab_temporal:
                 st.error("❌ No se encontró el archivo WarConsole.csv")
             except Exception as e:
                 st.error(f"❌ Error al cargar WarConsole.csv: {str(e)}")
-                import traceback
-                st.code(traceback.format_exc())
             
             # Summary section
             st.markdown("""
